@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Diplôme de stage</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Lato:wght@300;400&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #f0f4f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Lato', sans-serif;
+      padding: 20px;
+    }
+
+    .diplome {
+      width: 800px;
+      background: white;
+      padding: 60px 70px;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+
+      /* Bordure décorative double */
+      border: 4px solid #2d5a27;
+      outline: 2px solid #8bc34a;
+      outline-offset: -12px;
+    }
+
+    /* Coins décoratifs */
+    .coin {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+    }
+    .coin-tl { top: 8px; left: 8px; border-top: 3px solid #8bc34a; border-left: 3px solid #8bc34a; }
+    .coin-tr { top: 8px; right: 8px; border-top: 3px solid #8bc34a; border-right: 3px solid #8bc34a; }
+    .coin-bl { bottom: 8px; left: 8px; border-bottom: 3px solid #8bc34a; border-left: 3px solid #8bc34a; }
+    .coin-br { bottom: 8px; right: 8px; border-bottom: 3px solid #8bc34a; border-right: 3px solid #8bc34a; }
+
+    .logo-zone {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo-svg {
+      width: 70px;
+      height: 70px;
+    }
+
+    .entreprise-nom {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #4a8c40;
+      margin-top: 8px;
+    }
+
+    .separateur {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .separateur::before,
+    .separateur::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #8bc34a, transparent);
+    }
+
+    .separateur span {
+      color: #8bc34a;
+      font-size: 20px;
+    }
+
+    .titre-diplome {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .titre-principal {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      color: #2d5a27;
+      margin-bottom: 5px;
+    }
+
+    .titre-secondaire {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 22px;
+      color: #4a8c40;
+      margin-bottom: 30px;
+    }
+
+    .texte-certifie {
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+    }
+
+    .prenom {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      color: #2d5a27;
+      margin: 15px 0;
+      /* ✏️ REMPLIS TON PRÉNOM ICI */
+    }
+
+    .texte-corps {
+      text-align: center;
+      color: #555;
+      line-height: 2;
+      font-size: 14px;
+      margin: 20px 0;
+    }
+
+    .competences {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin: 25px 0;
+    }
+
+    .competence {
+      text-align: center;
+      padding: 10px;
+      background: #f0f8ee;
+      border-radius: 8px;
+      border: 1px solid #c8e6c9;
+    }
+
+    .competence .icone {
+      font-size: 22px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .competence .nom {
+      font-size: 11px;
+      color: #2d5a27;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .date-zone {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 35px;
+      padding-top: 20px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .date-bloc {
+      text-align: center;
+    }
+
+    .date-label {
+      font-size: 11px;
+      color: #aaa;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .date-valeur {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .signature-bloc {
+      text-align: center;
+    }
+
+    .signature-ligne {
+      width: 140px;
+      height: 1px;
+      background: #2d5a27;
+      margin: 0 auto 5px;
+    }
+
+    .signature-label {
+      font-size: 11px;
+      color: #aaa;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Fond décoratif (feuilles fantômes) */
+    .deco-fond {
+      position: absolute;
+      opacity: 0.04;
+      font-size: 200px;
+      bottom: -20px;
+      right: 20px;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .imprimer {
+      text-align: center;
+      margin-top: 20px;
+      color: #999;
+      font-size: 13px;
+    }
+
+    .btn-print {
+      background: #4a8c40;
+      color: white;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .imprimer { display: none; }
+      .diplome { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="diplome">
+
+  <!-- Coins décoratifs -->
+  <div class="coin coin-tl"></div>
+  <div class="coin coin-tr"></div>
+  <div class="coin coin-bl"></div>
+  <div class="coin coin-br"></div>
+
+  <!-- Fond décoratif -->
+  <div class="deco-fond">🌿</div>
+
+  <!-- Logo -->
+  <div class="logo-zone">
+    <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <ellipse cx="50" cy="45" rx="28" ry="38" fill="#4a8c40" transform="rotate(-15 50 45)"/>
+      <line x1="50" y1="75" x2="44" y2="20" stroke="#2d5a27" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="44" y1="55" x2="28" y2="45" stroke="#2d5a27" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="46" y1="45" x2="30" y2="35" stroke="#2d5a27" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="47" y1="35" x2="36" y2="25" stroke="#2d5a27" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="50" y1="75" x2="50" y2="88" stroke="#5d4037" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <!-- ✏️ Modifie le nom de ton entreprise -->
+    <div class="entreprise-nom">LAJUS</div>
+  </div>
+
+  <div class="separateur"><span>✦</span></div>
+
+  <div class="titre-diplome">Décerne le présent</div>
+  <div class="titre-principal">Diplôme de Stage</div>
+  <div class="titre-secondaire">Apprenti Développeur IA</div>
+
+  <div class="separateur"><span>🌿</span></div>
+
+  <div class="texte-certifie">Ce diplôme certifie que</div>
+
+  <!-- ✏️ REMPLIS LE PRÉNOM DU STAGIAIRE ICI -->
+  <div class="prenom">[ Prénom du stagiaire ]</div>
+
+  <div class="texte-corps">
+    a brillamment accompli son stage<br />
+    et a acquis les compétences suivantes :
+  </div>
+
+  <div class="competences">
+    <div class="competence">
+      <span class="icone">🌐</span>
+      <div class="nom">HTML</div>
+    </div>
+    <div class="competence">
+      <span class="icone">🎨</span>
+      <div class="nom">CSS</div>
+    </div>
+    <div class="competence">
+      <span class="icone">⚡</span>
+      <div class="nom">JavaScript</div>
+    </div>
+    <div class="competence">
+      <span class="icone">🤖</span>
+      <div class="nom">IA & Prompts</div>
+    </div>
+    <div class="competence">
+      <span class="icone">🚀</span>
+      <div class="nom">Publication web</div>
+    </div>
+  </div>
+
+  <div class="date-zone">
+    <div class="date-bloc">
+      <div class="date-label">Date</div>
+      <!-- ✏️ Mets la vraie date -->
+      <div class="date-valeur">Juin 2026</div>
+    </div>
+
+    <div class="date-bloc">
+      <div style="font-size: 30px;">🏆</div>
+    </div>
+
+    <div class="signature-bloc">
+      <div class="signature-ligne"></div>
+      <div class="signature-label">Les tuteurs de stage</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="imprimer">
+  <br/>
+  <button class="btn-print" onclick="window.print()">🖨️ Imprimer le diplôme</button>
+  <br/><br/>
+  <small>Pour un meilleur rendu : Format A4, orientation Paysage</small>
+</div>
+
+</body>
+</html>

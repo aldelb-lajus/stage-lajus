@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ma progression — Stage Paysage &amp; IA</title>
+  <style>
+    :root {
+      --vert-fonce: #2d5a27;
+      --vert-moyen: #4a8c40;
+      --vert-pale: #e8f5e9;
+      --texte: #212121;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--texte);
+      background: #e0e0e0;
+      line-height: 1.5;
+    }
+    .page {
+      background: #fff;
+      max-width: 800px;
+      margin: 1.5rem auto;
+      padding: 2.2rem 2.6rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .barre-print {
+      max-width: 800px;
+      margin: 1.5rem auto -0.5rem;
+      text-align: center;
+    }
+    .barre-print button {
+      background: var(--vert-moyen);
+      color: #fff; border: none;
+      padding: 0.7rem 1.4rem; border-radius: 8px;
+      font-size: 1rem; cursor: pointer; font-weight: 600;
+    }
+    h1 {
+      color: var(--vert-fonce);
+      font-size: 1.7rem;
+      border-bottom: 3px solid var(--vert-moyen);
+      padding-bottom: 0.5rem;
+    }
+    .sous-titre { color: #666; font-size: 0.95rem; margin: 0.3rem 0 1.4rem; }
+    .nom-ligne { margin: 0 0 1.4rem; font-size: 0.95rem; }
+    .nom-ligne span { border-bottom: 1px solid #999; display: inline-block; min-width: 220px; }
+    h2 {
+      color: var(--vert-fonce);
+      font-size: 1.1rem;
+      background: var(--vert-pale);
+      padding: 0.4rem 0.7rem;
+      border-radius: 6px;
+      margin: 1.3rem 0 0.6rem;
+    }
+    ul { list-style: none; }
+    li {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      padding: 0.22rem 0; font-size: 0.95rem;
+    }
+    .box {
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      border: 2px solid var(--vert-moyen);
+      border-radius: 4px;
+      margin-top: 0.18rem;
+    }
+    li.cle { font-weight: 600; }
+    .pied { margin-top: 1.6rem; text-align: center; color: var(--vert-fonce); font-weight: 600; font-size: 0.95rem; }
+
+    /* Guide de démarrage (étapes numérotées) */
+    .guide { list-style: none; counter-reset: etape; }
+    .guide > li {
+      counter-increment: etape;
+      display: block;
+      position: relative;
+      padding: 0.15rem 0 0.7rem 2.8rem;
+      font-size: 0.95rem;
+    }
+    .guide > li::before {
+      content: counter(etape);
+      position: absolute; left: 0; top: 0;
+      width: 1.9rem; height: 1.9rem;
+      background: var(--vert-moyen); color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.95rem;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    .guide > li strong { color: var(--vert-fonce); }
+    .guide ul { list-style: disc; margin: 0.3rem 0 0.2rem 1.2rem; }
+    .guide ul li { display: list-item; padding: 0.1rem 0; gap: 0; }
+    .astuce {
+      background: #fff8e1; border-left: 4px solid #ffb300;
+      padding: 0.5rem 0.8rem; border-radius: 0 6px 6px 0;
+      margin: 0.4rem 0; font-size: 0.88rem;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .barre-print { display: none; }
+      .page { box-shadow: none; margin: 0; max-width: none; padding: 0.5cm 1cm; }
+      h2 { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+    @page { size: A4; margin: 1.2cm; }
+  </style>
+</head>
+<body>
+
+  <div class="barre-print">
+    <button onclick="window.print()">🖨️ Imprimer / Enregistrer en PDF</button>
+  </div>
+
+  <div class="page">
+    <h1>🚀 Avant de commencer</h1>
+    <p class="sous-titre">Tu pars de zéro ? Parfait ! Suis ces étapes une par une, dans l'ordre. Si tu bloques sur une étape plus de 10 minutes, appelle ton tuteur. 🙂</p>
+
+    <ol class="guide">
+      <li>
+        <strong>Installer VS Code</strong> (le logiciel pour écrire le code).<br>
+        VS Code, c'est comme un super bloc-notes fait exprès pour programmer.
+        <ul>
+          <li>Ouvre ton navigateur (Chrome, Edge ou Firefox).</li>
+          <li>Va sur le site : <strong>code.visualstudio.com</strong></li>
+          <li>Clique sur le gros bouton bleu <strong>« Download for Windows »</strong>.</li>
+          <li>Un fichier se télécharge (en bas de l'écran). Double-clique dessus pour l'ouvrir.</li>
+          <li>Coche « J'accepte », puis clique <strong>Suivant</strong> à chaque étape, puis <strong>Installer</strong>, puis <strong>Terminer</strong>.</li>
+        </ul>
+        <p class="astuce">💡 Cette installation ne demande <strong>pas</strong> de mot de passe administrateur. Si jamais on t'en demande un, appelle ton tuteur.</p>
+      </li>
+
+      <li>
+        <strong>Mettre le dossier du projet sur l'ordinateur.</strong>
+        <ul>
+          <li>Ton tuteur te donne le dossier du projet (clé USB ou lien).</li>
+          <li>Copie le <strong>dossier entier</strong> sur le <strong>Bureau</strong> : clic droit sur le dossier → <em>Copier</em>, puis sur le Bureau clic droit → <em>Coller</em>.</li>
+        </ul>
+      </li>
+
+      <li>
+        <strong>Voir le site (le résultat).</strong>
+        <ul>
+          <li>Ouvre le dossier du projet (double-clic).</li>
+          <li>Double-clique sur le fichier <strong>index.html</strong>.</li>
+          <li>Ton navigateur s'ouvre et affiche le site 🌿 — c'est ce que tu vas améliorer !</li>
+        </ul>
+      </li>
+
+      <li>
+        <strong>Ouvrir ton carnet de missions.</strong>
+        <ul>
+          <li>Dans le même dossier, double-clique sur <strong>missions.html</strong>.</li>
+          <li>Ton carnet s'ouvre (onglets <em>Accueil</em>, <em>Déroulement</em>, <em>Aide</em>). Laisse-le ouvert : c'est ton guide !</li>
+        </ul>
+      </li>
+
+      <li>
+        <strong>Ouvrir le code dans VS Code.</strong>
+        <ul>
+          <li>Ouvre VS Code.</li>
+          <li>En haut : menu <strong>Fichier → Ouvrir le dossier...</strong></li>
+          <li>Choisis le dossier du projet (sur le Bureau), puis <strong>Sélectionner un dossier</strong>.</li>
+          <li>À gauche apparaît la liste des fichiers : <code>index.html</code>, <code>style.css</code>, <code>script.js</code>... C'est là que tu vas écrire !</li>
+        </ul>
+      </li>
+
+      <li>
+        <strong>Bien organiser ton écran.</strong>
+        <ul>
+          <li>Mets <strong>VS Code</strong> sur la moitié gauche et le <strong>navigateur</strong> (le site) sur la moitié droite.</li>
+          <li>Astuce : touche <strong>Windows + flèche gauche</strong> (ou droite) colle une fenêtre sur la moitié de l'écran.</li>
+        </ul>
+      </li>
+
+      <li>
+        <strong>C'est parti !</strong>
+        <ul>
+          <li>Dans <strong>missions.html</strong>, va dans l'onglet <strong>Déroulement</strong> et commence la <strong>Partie 1</strong>.</li>
+          <li>Rappel magique : après chaque modification → <strong>Ctrl+S</strong> (sauvegarder), puis <strong>F5</strong> dans le navigateur (rafraîchir) pour voir le résultat !</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <div class="page" style="break-before: page;">
+    <h1>✅ Ma progression</h1>
+    <p class="sous-titre">Coche chaque case quand tu as terminé. Chaque case = une vraie compétence !</p>
+    <p class="nom-ligne">Prénom : <span></span></p>
+
+    <h2>🧱 Partie 1 — Le site web et le HTML</h2>
+    <ul>
+      <li><span class="box"></span> J'ai ouvert <strong>index.html</strong> dans mon navigateur</li>
+      <li><span class="box"></span> J'ai ouvert <strong>index.html</strong> dans VS Code</li>
+      <li><span class="box"></span> J'ai compris les 3 langages : HTML, CSS, JavaScript</li>
+      <li class="cle"><span class="box"></span> Mission 1 — J'ai modifié mon prénom et le titre</li>
+      <li class="cle"><span class="box"></span> Mission 2 — J'ai ajouté une image</li>
+    </ul>
+
+    <h2>🎨 Partie 2 — Le style (CSS)</h2>
+    <ul>
+      <li class="cle"><span class="box"></span> Mission 3 — J'ai changé les couleurs du site</li>
+      <li><span class="box"></span> J'ai compris la différence entre HTML et CSS</li>
+    </ul>
+
+    <h2>🏗️ Partie 3 — Ajouter du contenu</h2>
+    <ul>
+      <li class="cle"><span class="box"></span> Mission 4 — J'ai ajouté une nouvelle section</li>
+    </ul>
+
+    <h2>⚡ Partie 4 — JavaScript et l'IA</h2>
+    <ul>
+      <li><span class="box"></span> J'ai compris comment fonctionne une IA (la prédiction de mots)</li>
+      <li><span class="box"></span> J'ai compris ce qu'est un prompt et une hallucination</li>
+      <li class="cle"><span class="box"></span> Mission 5 — J'ai amélioré le chatbot</li>
+      <li class="cle"><span class="box"></span> Mission 6 — J'ai ajouté des astuces jardinage</li>
+      <li><span class="box"></span> J'ai essayé la console JavaScript (F12)</li>
+    </ul>
+
+    <h2>🌍 Partie 5 — Ma page et la mise en ligne</h2>
+    <ul>
+      <li class="cle"><span class="box"></span> Mission 7 — J'ai rempli la page « Mon stage »</li>
+      <li class="cle"><span class="box"></span> Mission 8 — J'ai utilisé ChatGPT pour améliorer le site</li>
+      <li><span class="box"></span> J'ai compris comment un site se publie sur Internet</li>
+      <li><span class="box"></span> J'ai présenté mon site à l'équipe</li>
+    </ul>
+
+    <h2>🤖 Partie 6 — Pour finir</h2>
+    <ul>
+      <li><span class="box"></span> J'ai compris que ce projet a été créé avec l'aide d'une IA</li>
+      <li><span class="box"></span> J'ai vu (avec mon tuteur) comment une IA écrit du code</li>
+      <li class="cle"><span class="box"></span> Mission finale — J'ai personnalisé et imprimé mon diplôme 🎓</li>
+    </ul>
+
+    <h2>🏅 Compétences acquises</h2>
+    <ul>
+      <li><span class="box"></span> Je sais modifier du HTML</li>
+      <li><span class="box"></span> Je sais modifier du CSS</li>
+      <li><span class="box"></span> Je sais modifier du JavaScript</li>
+      <li><span class="box"></span> Je comprends le principe d'une IA</li>
+      <li><span class="box"></span> J'ai utilisé l'IA comme outil de travail</li>
+    </ul>
+
+    <p class="pied">Chaque case cochée = une vraie compétence. Bravo ! 🌿</p>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 180">
+  <!-- Sol / gazon -->
+  <rect x="0" y="145" width="220" height="35" rx="5" fill="#66bb6a"/>
+  <!-- Brin d'herbe coupé -->
+  <line x1="30" y1="145" x2="30" y2="125" stroke="#4a8c40" stroke-width="3"/>
+  <line x1="50" y1="145" x2="50" y2="120" stroke="#4a8c40" stroke-width="3"/>
+  <line x1="70" y1="145" x2="70" y2="130" stroke="#4a8c40" stroke-width="3"/>
+  <line x1="160" y1="145" x2="165" y2="115" stroke="#4a8c40" stroke-width="3"/>
+  <line x1="185" y1="145" x2="190" y2="120" stroke="#4a8c40" stroke-width="3"/>
+  <!-- Corps principal de la tondeuse (rouge) -->
+  <rect x="40" y="95" width="140" height="55" rx="12" fill="#e53935"/>
+  <!-- Dessus arrondi -->
+  <rect x="55" y="78" width="110" height="30" rx="10" fill="#ef5350"/>
+  <!-- Roues arrière -->
+  <circle cx="65" cy="150" r="18" fill="#424242"/>
+  <circle cx="65" cy="150" r="10" fill="#616161"/>
+  <circle cx="65" cy="150" r="4" fill="#9e9e9e"/>
+  <!-- Roues avant -->
+  <circle cx="155" cy="150" r="18" fill="#424242"/>
+  <circle cx="155" cy="150" r="10" fill="#616161"/>
+  <circle cx="155" cy="150" r="4" fill="#9e9e9e"/>
+  <!-- Poignée -->
+  <path d="M160 78 Q190 60 195 40" stroke="#5d4037" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M195 40 Q200 38 205 45" stroke="#5d4037" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <!-- Bac à herbe -->
+  <rect x="28" y="100" width="22" height="35" rx="6" fill="#ffa726"/>
+  <!-- Détails moteur -->
+  <rect x="90" y="82" width="40" height="15" rx="4" fill="#b71c1c"/>
+  <!-- Petit herbe qui vole (coupée) -->
+  <line x1="25" y1="100" x2="15" y2="85" stroke="#8bc34a" stroke-width="2" stroke-linecap="round"/>
+  <line x1="28" y1="98" x2="12" y2="90" stroke="#8bc34a" stroke-width="2" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 🌿 TODO Mission 1 : Modifie le titre qui s'affiche dans l'onglet du navigateur -->
+  <title>LAJUS — Espaces verts &amp; paysage</title>
+
+  <!-- On relie notre fichier de style CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ============================================================
+       BARRE DE NAVIGATION
+       La barre en haut avec les liens vers chaque section
+  ============================================================ -->
+  <nav>
+    <div class="nav-logo">
+      <!-- Le nom de l'entreprise d'accueil -->
+      <img src="images/logo.svg" alt="Logo LAJUS" class="nav-logo-img" />
+      <span>LAJUS</span>
+    </div>
+    <ul class="nav-liens">
+      <li><a href="#accueil">Accueil</a></li>
+      <li><a href="#entreprise">L'entreprise</a></li>
+      <li><a href="#plantes">Les plantes</a></li>
+      <li><a href="#assistant">Assistant IA</a></li>
+      <li><a href="#stage">Mon stage</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============================================================
+       SECTION ACCUEIL (hero)
+       La grande bannière qu'on voit en premier
+  ============================================================ -->
+  <section id="accueil" class="hero">
+    <div class="hero-contenu">
+      <h1>
+        <!-- 🌿 TODO Mission 1 : Écris ton prénom ici -->
+        Bienvenue sur le projet du stagiaire !
+      </h1>
+      <p class="hero-sous-titre">
+        Un site web créé pendant un stage chez LAJUS,<br />
+        avec un assistant IA spécialisé dans les espaces verts.
+      </p>
+      <a href="#assistant" class="bouton-principal">
+        💬 Parler à l'assistant IA
+      </a>
+    </div>
+    <div class="hero-image">
+      <img src="images/jardin.svg" alt="Jardin" />
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION ENTREPRISE
+       Présentation de l'entreprise d'accueil
+  ============================================================ -->
+  <section id="entreprise" class="section">
+    <h2>🏡 L'entreprise</h2>
+    <div class="carte-entreprise">
+      <div class="entreprise-texte">
+        <h3>Qui sommes-nous ?</h3>
+        <!-- 🌿 TODO Mission 4 : Complète avec de vraies infos sur LAJUS -->
+        <p>
+          LAJUS rassemble des entreprises spécialisées dans les espaces verts,
+          le paysage et l'environnement. Nous créons, aménageons et entretenons
+          les espaces extérieurs, et nous prenons soin de l'eau et de la nature.
+          Notre devise : <em>« L'innovation verte, notre engagement collectif. »</em>
+        </p>
+        <h3>Ce que nous faisons</h3>
+        <ul class="liste-services">
+          <li>🌳 Aménagement paysager</li>
+          <li>✂️ Entretien des espaces verts</li>
+          <li>💧 Gestion de l'eau et arrosage</li>
+          <li>🌱 Plantation et engazonnement</li>
+          <li>🌍 Respect de l'environnement</li>
+        </ul>
+        <h3>Nos valeurs</h3>
+        <ul class="liste-services">
+          <li>💚 Bienveillance</li>
+          <li>🚀 Esprit d'entreprendre</li>
+          <li>🤝 Esprit d'équipe</li>
+          <li>🌿 Santé de l'entreprise et des territoires</li>
+        </ul>
+      </div>
+      <div class="entreprise-image">
+        <img src="images/haie.svg" alt="Haie taillée" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION PLANTES
+       Des fiches sur les plantes et les métiers
+  ============================================================ -->
+  <section id="plantes" class="section section-sombre">
+    <h2>🌿 Les plantes du paysagiste</h2>
+    <p class="section-intro">
+      Clique sur une plante pour en savoir plus.
+    </p>
+
+    <div class="grille-plantes">
+
+      <!-- Fiche plante 1 -->
+      <div class="fiche-plante" onclick="afficherInfo('arbre')">
+        <img src="images/arbre.svg" alt="Arbre" />
+        <h3>L'arbre</h3>
+        <p>Cliquer pour en savoir plus</p>
+      </div>
+
+      <!-- Fiche plante 2 -->
+      <div class="fiche-plante" onclick="afficherInfo('haie')">
+        <img src="images/haie.svg" alt="Haie" />
+        <h3>La haie</h3>
+        <p>Cliquer pour en savoir plus</p>
+      </div>
+
+      <!-- Fiche plante 3 -->
+      <div class="fiche-plante" onclick="afficherInfo('gazon')">
+        <img src="images/jardin.svg" alt="Gazon" />
+        <h3>Le gazon</h3>
+        <p>Cliquer pour en savoir plus</p>
+      </div>
+
+      <!-- Fiche plante 4 -->
+      <div class="fiche-plante" onclick="afficherInfo('fleur')">
+        <img src="images/fleur.svg" alt="Fleur" />
+        <h3>Les fleurs</h3>
+        <p>Cliquer pour en savoir plus</p>
+      </div>
+
+      <!-- 🌿 TODO Mission 4 : Ajoute une nouvelle fiche plante ici !
+           Copie un bloc "fiche-plante" et modifie-le.
+      -->
+
+    </div>
+
+    <!-- Zone qui affiche les infos quand on clique -->
+    <div id="info-plante" class="info-plante" style="display:none;">
+      <button onclick="fermerInfo()" class="fermer">✕ Fermer</button>
+      <h3 id="info-titre"></h3>
+      <p id="info-texte"></p>
+    </div>
+
+  </section>
+
+  <!-- ============================================================
+       SECTION ASTUCES JARDINAGE
+       Un bouton qui affiche des astuces au hasard
+  ============================================================ -->
+  <section id="astuces" class="section">
+    <h2>💡 L'astuce du jour</h2>
+    <div class="astuce-zone">
+      <div id="astuce-texte" class="astuce-carte">
+        Clique sur le bouton pour découvrir une astuce !
+      </div>
+      <button onclick="nouvelleAstuce()" class="bouton-principal">
+        🎲 Nouvelle astuce
+      </button>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION ASSISTANT IA
+       Le chatbot qui répond aux questions de jardinage
+  ============================================================ -->
+  <section id="assistant" class="section section-sombre">
+    <h2>🤖 Assistant IA Espaces verts</h2>
+    <p class="section-intro">
+      Pose-moi une question sur les espaces verts et le jardinage !<br />
+      <small>Je suis une IA simulée — je réponds grâce à des mots-clés.</small>
+    </p>
+
+    <!-- Zone de discussion -->
+    <div class="chat-conteneur">
+
+      <!-- Historique des messages -->
+      <div id="chat-messages" class="chat-messages">
+        <!-- Le premier message de l'IA est ajouté par JavaScript -->
+      </div>
+
+      <!-- Zone de saisie -->
+      <div class="chat-saisie">
+        <input
+          type="text"
+          id="chat-input"
+          placeholder="Tape ta question ici... (ex: Comment tailler une haie ?)"
+          onkeypress="gererEntree(event)"
+        />
+        <button onclick="envoyerMessage()" class="bouton-envoyer">
+          Envoyer ➤
+        </button>
+      </div>
+
+      <!-- Questions exemples -->
+      <div class="questions-exemples">
+        <p>Questions exemples :</p>
+        <button onclick="poserQuestion('Comment arroser mon jardin ?')" class="bouton-exemple">💧 Arrosage</button>
+        <button onclick="poserQuestion('Comment tailler une haie ?')" class="bouton-exemple">✂️ Haie</button>
+        <button onclick="poserQuestion('Quand planter un arbre ?')" class="bouton-exemple">🌳 Arbre</button>
+        <button onclick="poserQuestion('Comment avoir un beau gazon ?')" class="bouton-exemple">🌿 Gazon</button>
+        <button onclick="poserQuestion('Comment faire un potager ?')" class="bouton-exemple">🥕 Potager</button>
+        <!-- 🌿 TODO Mission 5 : Ajoute une nouvelle question exemple ici ! -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION MON STAGE
+       À compléter par le stagiaire !
+  ============================================================ -->
+  <section id="stage" class="section">
+    <h2>📋 Mon stage</h2>
+
+    <div class="stage-grille">
+
+      <div class="stage-carte">
+        <h3>👤 Qui suis-je ?</h3>
+        <!-- 🌿 TODO Mission 7 : Complète avec tes vraies informations -->
+        <p><strong>Prénom :</strong> ???</p>
+        <p><strong>Âge :</strong> ???</p>
+        <p><strong>École :</strong> ???</p>
+        <p><strong>Classe :</strong> ???</p>
+      </div>
+
+      <div class="stage-carte">
+        <h3>✅ Ce que j'ai appris</h3>
+        <!-- 🌿 TODO Mission 7 : Écris 3 choses que tu as apprises -->
+        <ul>
+          <li>???</li>
+          <li>???</li>
+          <li>???</li>
+        </ul>
+      </div>
+
+      <div class="stage-carte">
+        <h3>😮 Ce qui m'a surpris</h3>
+        <!-- 🌿 TODO Mission 7 : Écris ce qui t'a étonné -->
+        <p>???</p>
+      </div>
+
+      <div class="stage-carte">
+        <h3>❤️ Ce que j'ai préféré</h3>
+        <!-- 🌿 TODO Mission 7 : Écris ton moment préféré -->
+        <p>???</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PIED DE PAGE
+  ============================================================ -->
+  <footer>
+    <p>
+      🌿 Site créé pendant un stage chez LAJUS ·
+      <!-- 🌿 TODO Mission 1 : Mets ton prénom -->
+      Par ??? · 2026
+    </p>
+    <p class="footer-petit">
+      Fait avec HTML, CSS, JavaScript et beaucoup de curiosité.
+    </p>
+  </footer>
+
+  <!-- On relie notre fichier JavaScript (toujours à la fin !) -->
+  <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Feuille principale -->
+  <ellipse cx="50" cy="45" rx="28" ry="38" fill="#4a8c40" transform="rotate(-15 50 45)"/>
+  <!-- Nervure centrale -->
+  <line x1="50" y1="75" x2="44" y2="20" stroke="#2d5a27" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Nervures latérales -->
+  <line x1="44" y1="55" x2="28" y2="45" stroke="#2d5a27" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="46" y1="45" x2="30" y2="35" stroke="#2d5a27" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="47" y1="35" x2="36" y2="25" stroke="#2d5a27" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Tige -->
+  <line x1="50" y1="75" x2="50" y2="88" stroke="#5d4037" stroke-width="3" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌿 Stage Paysage &amp; IA — Mon carnet de bord</title>
+  <style>
+    :root {
+      --vert-fonce: #2d5a27;
+      --vert-moyen: #4a8c40;
+      --vert-clair: #8bc34a;
+      --vert-pale: #e8f5e9;
+      --brun: #5d4037;
+      --blanc: #ffffff;
+      --gris-clair: #f5f5f5;
+      --texte-fonce: #212121;
+      --texte-moyen: #555555;
+      --rayon: 12px;
+      --ombre: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--texte-fonce);
+      background: var(--vert-pale);
+      line-height: 1.6;
+    }
+
+    /* ===== En-tête + onglets ===== */
+    header {
+      background: var(--vert-fonce);
+      color: var(--blanc);
+      padding: 1.2rem 2rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      box-shadow: var(--ombre);
+    }
+    header h1 { font-size: 1.4rem; }
+    header p { opacity: 0.85; font-size: 0.9rem; margin-bottom: 0.8rem; }
+    .tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .tab-btn {
+      background: transparent;
+      color: var(--blanc);
+      border: none;
+      padding: 0.7rem 1.3rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 10px 10px 0 0;
+      opacity: 0.7;
+      font-weight: 600;
+    }
+    .tab-btn:hover { opacity: 1; background: rgba(255,255,255,0.1); }
+    .tab-btn.active { background: var(--vert-pale); color: var(--vert-fonce); opacity: 1; }
+
+    /* ===== Panneaux ===== */
+    main { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .panel { display: none; }
+    .panel.active { display: block; animation: fade 0.25s ease; }
+    @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; } }
+
+    /* ===== Sommaire (chips) ===== */
+    .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .chips a {
+      background: var(--blanc);
+      color: var(--vert-fonce);
+      text-decoration: none;
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: var(--ombre);
+      border: 1px solid var(--vert-pale);
+    }
+    .chips a:hover { background: var(--vert-clair); }
+
+    /* ===== Cartes / blocs ===== */
+    .carte {
+      background: var(--blanc);
+      border-radius: var(--rayon);
+      padding: 1.6rem 1.8rem;
+      box-shadow: var(--ombre);
+      margin-bottom: 1.8rem;
+    }
+    .carte.accent { border-left: 6px solid var(--vert-clair); }
+    .carte h2 { color: var(--vert-fonce); margin-bottom: 0.6rem; }
+    .carte h3 { color: var(--brun); margin: 1.2rem 0 0.4rem; }
+    .carte ul, .carte ol { margin: 0.4rem 0 0.4rem 1.3rem; }
+    .carte li { margin-bottom: 0.3rem; }
+
+    /* ===== Délimitation des parties ===== */
+    .partie-header {
+      background: linear-gradient(135deg, var(--vert-fonce), var(--vert-moyen));
+      color: var(--blanc);
+      border-radius: var(--rayon);
+      padding: 1.4rem 1.8rem;
+      margin: 2.8rem 0 1.4rem;
+      box-shadow: var(--ombre);
+      scroll-margin-top: 130px;
+    }
+    .partie-header:first-of-type { margin-top: 0.5rem; }
+    .partie-num {
+      display: inline-block;
+      background: rgba(255,255,255,0.25);
+      padding: 0.15rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .partie-header h2 { font-size: 1.5rem; margin-bottom: 0.4rem; }
+    .partie-header p { opacity: 0.92; font-size: 0.95rem; }
+
+    /* ===== Bloc explication ===== */
+    .explication {
+      background: var(--blanc);
+      border-radius: var(--rayon);
+      padding: 1.4rem 1.7rem;
+      box-shadow: var(--ombre);
+      margin-bottom: 1.4rem;
+      border-left: 6px solid var(--vert-clair);
+    }
+    .explication .etiquette {
+      display: inline-block;
+      background: var(--vert-pale);
+      color: var(--vert-fonce);
+      padding: 0.15rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .explication h3 { color: var(--vert-fonce); margin: 1rem 0 0.4rem; }
+    .explication h3:first-of-type { margin-top: 0.3rem; }
+
+    /* ===== Mission ===== */
+    section.mission {
+      background: var(--blanc);
+      border-radius: var(--rayon);
+      padding: 1.6rem 1.8rem;
+      box-shadow: var(--ombre);
+      margin-bottom: 1.4rem;
+      border-left: 6px solid var(--vert-moyen);
+      scroll-margin-top: 130px;
+    }
+    section.mission h2 {
+      color: var(--vert-fonce);
+      font-size: 1.35rem;
+      margin-bottom: 0.5rem;
+    }
+    .meta { font-size: 0.9rem; color: var(--texte-moyen); margin-bottom: 1rem; }
+    .badge {
+      background: var(--vert-pale);
+      color: var(--vert-fonce);
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    section.mission h3, .carte h3 { font-size: 1.1rem; }
+    section.mission h4, .explication h4 { color: var(--vert-moyen); margin: 0.9rem 0 0.3rem; font-size: 1rem; }
+    section.mission p, section.mission li, .explication p, .explication li { margin-bottom: 0.5rem; }
+    section.mission ul, section.mission ol, .explication ul, .explication ol { margin-left: 1.4rem; }
+
+    /* ===== Fiches d'aide ===== */
+    section.fiche {
+      background: var(--blanc);
+      border-radius: var(--rayon);
+      padding: 1.6rem 1.8rem;
+      box-shadow: var(--ombre);
+      margin-bottom: 1.8rem;
+      scroll-margin-top: 130px;
+    }
+    section.fiche h2 {
+      color: var(--vert-fonce);
+      border-bottom: 3px solid var(--vert-pale);
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+    section.fiche h3 { color: var(--brun); margin: 1.3rem 0 0.4rem; font-size: 1.1rem; }
+    section.fiche h4 { color: var(--vert-moyen); margin: 0.9rem 0 0.3rem; }
+    section.fiche ul, section.fiche ol { margin-left: 1.4rem; }
+    section.fiche li { margin-bottom: 0.3rem; }
+
+    /* ===== Éléments communs ===== */
+    blockquote {
+      border-left: 4px solid var(--vert-clair);
+      background: var(--vert-pale);
+      padding: 0.7rem 1rem;
+      margin: 0.8rem 0;
+      font-style: italic;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout { background: #fff8e1; border-left: 4px solid #ffb300; padding: 0.7rem 1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; }
+    .callout.bonus { background: #ede7f6; border-left-color: #7e57c2; }
+    .callout.fini { background: var(--vert-pale); border-left-color: var(--vert-moyen); }
+
+    .code-bloc { position: relative; margin: 0.8rem 0; }
+    pre {
+      background: #1e1e1e; color: #d4d4d4;
+      padding: 1rem; border-radius: 8px; overflow-x: auto;
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 0.86rem; line-height: 1.5;
+    }
+    code.inline {
+      background: var(--gris-clair); color: var(--brun);
+      padding: 0.1rem 0.4rem; border-radius: 4px;
+      font-family: "Consolas", "Courier New", monospace; font-size: 0.9em;
+    }
+    .btn-copier {
+      position: absolute; top: 8px; right: 8px;
+      background: var(--vert-moyen); color: var(--blanc);
+      border: none; padding: 0.3rem 0.7rem; border-radius: 6px;
+      font-size: 0.78rem; cursor: pointer; opacity: 0.85;
+    }
+    .btn-copier:hover { opacity: 1; }
+    .btn-copier.ok { background: var(--vert-clair); color: var(--vert-fonce); }
+
+    table { border-collapse: collapse; width: 100%; margin: 0.8rem 0; font-size: 0.9rem; }
+    th, td { border: 1px solid var(--vert-pale); padding: 0.5rem 0.7rem; text-align: left; }
+    th { background: var(--vert-pale); color: var(--vert-fonce); }
+
+    .kbd { display: inline-block; background: #fff; border: 1px solid #bbb; border-bottom-width: 2px; border-radius: 5px; padding: 0.05rem 0.45rem; font-family: monospace; font-size: 0.85em; }
+
+    footer { text-align: center; padding: 2rem; color: var(--texte-moyen); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🌿 Stage Paysage &amp; IA</h1>
+    <p>Mon carnet de bord — 8 missions pour créer un site web avec un assistant IA</p>
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="accueil">🏠 Accueil</button>
+      <button class="tab-btn" data-tab="deroulement">🗺️ Déroulement</button>
+      <button class="tab-btn" data-tab="aide">📚 Aide</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ============================================================
+         ONGLET ACCUEIL
+    ============================================================ -->
+    <div class="panel active" id="tab-accueil">
+
+      <div class="carte accent">
+        <h2>👋 Bienvenue dans ton stage chez LAJUS !</h2>
+        <p>Pendant ton stage, tu vas découvrir comment fonctionnent un site web et une intelligence artificielle, tout en créant quelque chose de concret que tu pourras montrer à ta famille.</p>
+      </div>
+
+      <div class="carte">
+        <h2>🎁 Ce que tu vas créer</h2>
+        <p>Un site web complet avec :</p>
+        <ul>
+          <li>🏠 Une page d'accueil personnalisée</li>
+          <li>🏡 Une présentation de l'entreprise LAJUS</li>
+          <li>🌿 Des fiches sur les plantes du paysagiste</li>
+          <li>🤖 Un assistant IA qui répond aux questions sur les espaces verts</li>
+          <li>📋 Une page « Mon stage » que tu remplis toi-même</li>
+        </ul>
+      </div>
+
+      <div class="carte">
+        <h2>🛠️ Comment travailler</h2>
+        <h3>Tes outils</h3>
+        <ul>
+          <li><strong>VS Code</strong> pour modifier le code</li>
+          <li><strong>Ton navigateur</strong> (Chrome ou Firefox) pour voir le résultat</li>
+          <li><strong>Cette page</strong> — onglet <strong>Déroulement</strong> pour les missions, onglet <strong>Aide</strong> si tu bloques</li>
+          <li><strong>ChatGPT</strong> si tu bloques (demande à ton tuteur)</li>
+        </ul>
+        <h3>⏱️ La règle des 10 minutes</h3>
+        <p>Si tu bloques plus de <strong>10 minutes</strong> :</p>
+        <ol>
+          <li>Regarde l'onglet <strong>Aide</strong></li>
+          <li>Cherche sur Internet</li>
+          <li>Demande à ChatGPT</li>
+          <li>Sinon pas de panique → appelle ton tuteur</li>
+        </ol>
+        <p><em>C'est comme ça qu'on apprend vraiment !</em></p>
+      </div>
+
+      <div class="carte">
+        <h2>🚀 Par où commencer ?</h2>
+        <ol>
+          <li>Ouvre <code class="inline">index.html</code> dans ton navigateur (double-clic)</li>
+          <li>Ouvre <code class="inline">index.html</code> dans VS Code</li>
+          <li>Va dans l'onglet <strong>Déroulement</strong> et lis la <strong>Partie 1</strong></li>
+          <li>C'est parti !</li>
+        </ol>
+      </div>
+
+      <div class="carte">
+        <h2>⌨️ Raccourcis clavier utiles</h2>
+        <table>
+          <tr><th>Raccourci</th><th>Action</th></tr>
+          <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">S</span></td><td>Sauvegarder</td></tr>
+          <tr><td><span class="kbd">F5</span></td><td>Rafraîchir le navigateur</td></tr>
+          <tr><td><span class="kbd">F12</span></td><td>Ouvrir les outils développeur</td></tr>
+          <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">F</span></td><td>Rechercher dans le fichier</td></tr>
+          <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">Z</span></td><td>Annuler une erreur</td></tr>
+        </table>
+        <h3>Si quelque chose ne s'affiche pas</h3>
+        <ol>
+          <li>Vérifie que tu as sauvegardé (<span class="kbd">Ctrl</span>+<span class="kbd">S</span>)</li>
+          <li>Rafraîchis le navigateur (<span class="kbd">F5</span>)</li>
+          <li><span class="kbd">F12</span> → onglet <strong>Console</strong> → cherche les erreurs en rouge</li>
+          <li>Copie l'erreur et demande à ChatGPT</li>
+        </ol>
+      </div>
+
+      <p style="text-align:center; color:var(--vert-fonce); font-weight:600;">Bonne chance ! Tu vas y arriver. 🌱</p>
+    </div>
+
+    <!-- ============================================================
+         ONGLET DÉROULEMENT
+    ============================================================ -->
+    <div class="panel" id="tab-deroulement">
+
+      <div class="carte accent">
+        <h2>🗺️ Ton parcours</h2>
+        <p>Voici ton chemin, étape par étape. Dans chaque <strong>partie</strong> : d'abord une <strong>explication</strong>, puis une ou plusieurs <strong>missions</strong> à réaliser. Avance à ton rythme — il n'y a pas de chrono.</p>
+        <div class="chips" style="margin-top:1rem; margin-bottom:0;">
+          <a href="#p1">1 · Le site &amp; le HTML</a>
+          <a href="#p2">2 · Le style (CSS)</a>
+          <a href="#p3">3 · Ajouter du contenu</a>
+          <a href="#p4">4 · JavaScript &amp; l'IA</a>
+          <a href="#p5">5 · Ta page &amp; la mise en ligne</a>
+          <a href="#p6">6 · Le secret 🤖</a>
+          <a href="#p7">7 · Ton diplôme 🎓</a>
+        </div>
+      </div>
+
+      <!-- ===================== PARTIE 1 ===================== -->
+      <div class="partie-header" id="p1">
+        <span class="partie-num">Partie 1</span>
+        <h2>🧱 Le site web et le HTML</h2>
+        <p>Comprendre ce qu'est un site web, puis modifier ton premier code.</p>
+      </div>
+
+      <div class="explication">
+        <span class="etiquette">📖 Explication</span>
+        <h3>C'est quoi un site web ?</h3>
+        <p>Un site web, ce sont des <strong>fichiers</strong> que ton navigateur (Chrome, Firefox...) lit et transforme en page que tu vois à l'écran. Ton site utilise <strong>3 langages</strong>, comme les 3 couches d'une maison :</p>
+        <ul>
+          <li>🧱 <strong>HTML</strong> = les <strong>murs</strong> → le contenu (titres, textes, images)</li>
+          <li>🎨 <strong>CSS</strong> = la <strong>peinture</strong> → l'apparence (couleurs, tailles)</li>
+          <li>⚡ <strong>JavaScript</strong> = l'<strong>électricité</strong> → les interactions (boutons, chatbot)</li>
+        </ul>
+        <p>On commence par le HTML. Une <strong>balise</strong> HTML entoure du contenu : <code class="inline">&lt;h1&gt;Mon titre&lt;/h1&gt;</code>. Besoin de détails ? → onglet <strong>Aide → HTML</strong>.</p>
+      </div>
+
+      <section class="mission" id="m1">
+        <h2>🎯 Mission 1 — Modifier le HTML</h2>        <h3>Ta mission</h3>
+        <p>La page dit <em>« Bienvenue sur le projet du stagiaire ! »</em>. C'est toi le stagiaire — personnalise-la !</p>
+        <h3>Ce que tu dois faire</h3>
+        <p>Ouvre <code class="inline">index.html</code> dans VS Code. Cherche (<span class="kbd">Ctrl</span>+<span class="kbd">F</span>) les mots <code class="inline">TODO Mission 1</code>. Il y a <strong>3 endroits</strong> à modifier.</p>
+        <h4>1 — Le titre de l'onglet du navigateur</h4>
+        <p>Tout en haut du fichier, trouve la ligne <code class="inline">&lt;title&gt;...&lt;/title&gt;</code> et écris le titre que tu veux voir dans l'onglet, par exemple :</p>
+        <div class="code-bloc"><pre>&lt;title&gt;LAJUS — Mon stage&lt;/title&gt;</pre></div>
+        <h4>2 — Le titre principal</h4>
+        <p>Trouve <code class="inline">Bienvenue sur le projet du stagiaire !</code> et remplace, par exemple :</p>
+        <div class="code-bloc"><pre>Bonjour, je suis Lucas — en stage chez LAJUS !</pre></div>
+        <h4>3 — Le pied de page</h4>
+        <p>Tout en bas, trouve <code class="inline">Par ??? · 2026</code> et remplace <code class="inline">???</code> par ton prénom.</p>
+        <h3>Comment tester ?</h3>
+        <p><span class="kbd">Ctrl</span>+<span class="kbd">S</span> → va dans le navigateur → <span class="kbd">F5</span> → tu vois tes modifications !</p>
+        <div class="callout fini">✅ <strong>Tu as fini ?</strong> Appelle ton tuteur pour lui montrer !</div>
+      </section>
+
+      <section class="mission" id="m2">
+        <h2>🎯 Mission 2 — Ajouter une image</h2>        <h3>Ta mission</h3>
+        <p>Ajouter une image dans la section « L'entreprise ». La balise image en HTML :</p>
+        <div class="code-bloc"><pre>&lt;img src="chemin/image.jpg" alt="Description de l'image" /&gt;</pre></div>
+        <ul>
+          <li><code class="inline">src</code> = le chemin vers l'image</li>
+          <li><code class="inline">alt</code> = un texte qui décrit l'image (pour les malvoyants)</li>
+        </ul>
+        <h4>Option A — Utiliser une image déjà là</h4>
+        <p>Dans <code class="inline">index.html</code>, trouve la section entreprise :</p>
+        <div class="code-bloc"><pre>&lt;div class="entreprise-image"&gt;
+  &lt;img src="images/haie.svg" alt="Haie taillée" /&gt;
+&lt;/div&gt;</pre></div>
+        <p>Change <code class="inline">haie.svg</code> par : <code class="inline">arbre.svg</code>, <code class="inline">fleur.svg</code> ou <code class="inline">jardin.svg</code>.</p>
+        <h4>Option B — Ta propre image</h4>
+        <ol>
+          <li>Trouve une image sur Internet (.jpg ou .png)</li>
+          <li>Copie-la dans le dossier <code class="inline">images/</code></li>
+          <li>Mets : <code class="inline">&lt;img src="images/mon-jardin.jpg" alt="Mon jardin" /&gt;</code></li>
+        </ol>
+        <div class="callout bonus">🌟 <strong>Bonus :</strong> ajoute une image dans la bannière d'accueil. Cherche <code class="inline">hero-image</code>.</div>
+        <p><strong>Si l'image n'apparaît pas :</strong> vérifie le nom exact (majuscules, tirets) et qu'elle est bien dans <code class="inline">images/</code>.</p>
+        <div class="callout fini">✅ <strong>Tu as fini ?</strong> Appelle ton tuteur !</div>
+      </section>
+
+      <!-- ===================== PARTIE 2 ===================== -->
+      <div class="partie-header" id="p2">
+        <span class="partie-num">Partie 2</span>
+        <h2>🎨 Le style : les couleurs (CSS)</h2>
+        <p>Donner ta touche personnelle au site en changeant son apparence.</p>
+      </div>
+
+      <div class="explication">
+        <span class="etiquette">📖 Explication</span>
+        <h3>Le CSS, la peinture du site</h3>
+        <p>Le HTML pose le contenu, mais c'est le <strong>CSS</strong> qui décide des couleurs, des tailles et de la mise en page. Tout est dans le fichier <code class="inline">style.css</code>.</p>
+
+        <h3>🎨 Comment écrit-on une couleur ? (le code hexadécimal)</h3>
+        <p>Sur un site, une couleur s'écrit le plus souvent avec un <strong>code hexadécimal</strong> : un <code class="inline">#</code> suivi de 6 caractères, par exemple <code class="inline">#2d5a27</code>.</p>
+        <p>« Hexadécimal » veut dire <strong>« base 16 »</strong> : au lieu de compter seulement de 0 à 9, on continue avec des lettres — <code class="inline">0 1 2 3 4 5 6 7 8 9 a b c d e f</code> (où <code class="inline">a</code> vaut 10 et <code class="inline">f</code> vaut 15). Ça permet d'écrire plein de nuances avec peu de caractères.</p>
+        <p>Les 6 caractères sont en fait <strong>3 paires</strong> qui dosent les 3 lumières de l'écran : <strong>Rouge</strong>, <strong>Vert</strong>, <strong>Bleu</strong>.</p>
+        <div class="code-bloc"><pre>#  2d   5a   27
+   ──   ──   ──
+  Rouge Vert Bleu</pre></div>
+        <p>Chaque paire va de <code class="inline">00</code> (lumière éteinte) à <code class="inline">ff</code> (lumière à fond) :</p>
+        <ul>
+          <li><code class="inline">#ff0000</code> → 🔴 rouge à fond</li>
+          <li><code class="inline">#00ff00</code> → 🟢 vert à fond</li>
+          <li><code class="inline">#0000ff</code> → 🔵 bleu à fond</li>
+          <li><code class="inline">#000000</code> → ⚫ tout éteint = noir &nbsp;·&nbsp; <code class="inline">#ffffff</code> → ⚪ tout à fond = blanc</li>
+        </ul>
+        <p>Pas besoin de calculer ! Va sur <code class="inline">htmlcolorcodes.com</code>, choisis une couleur, copie son code <code class="inline">#...</code> et colle-le. C'est tout.</p>
+
+        <h3>Les variables : un nom = une couleur</h3>
+        <p>Tout en haut de <code class="inline">style.css</code>, des <strong>variables</strong> rangent les couleurs avec un nom qui dit <strong>à quoi elles servent</strong> (par exemple <code class="inline">--couleur-principale</code>). En changer une seule met à jour le site <strong>partout</strong> d'un coup. Détails → onglet <strong>Aide → CSS</strong>.</p>
+      </div>
+
+      <section class="mission" id="m3">
+        <h2>🎯 Mission 3 — Changer les couleurs (CSS)</h2>        <h3>Ta mission</h3>
+        <p>Change les couleurs du site en modifiant <code class="inline">style.css</code>.</p>
+        <h4>Étape 1 — Ouvre <code class="inline">style.css</code></h4>
+        <p>Tout en haut, tu vois les variables. Leur nom dit à quoi sert chaque couleur :</p>
+        <div class="code-bloc"><pre>:root {
+  --couleur-principale:  #2d5a27;   /* titres, barre du haut */
+  --couleur-boutons:     #4a8c40;   /* boutons */
+  --couleur-accent:      #8bc34a;   /* bordures, touches de couleur */
+  --couleur-fond:        #e8f5e9;   /* fonds clairs */
+  ...
+}</pre></div>
+        <h4>Étape 2 — Change une couleur</h4>
+        <p>Par exemple, mets la couleur principale en orange :</p>
+        <div class="code-bloc"><pre>--couleur-principale: #ff9800;   /* Orange */</pre></div>
+        <p>Sauvegarde, rafraîchis → tous les titres et la barre du haut deviennent orange d'un coup ! 👉 Trouve tes codes couleur sur <code class="inline">htmlcolorcodes.com</code></p>
+        <h4>Étape 3 — Personnalise</h4>
+        <p>Change au moins <strong>3 variables</strong> de couleur pour donner ton style au site.</p>
+        <div class="callout bonus">🌟 <strong>Bonus :</strong> change aussi une taille de titre (<code class="inline">font-size</code>) ou l'arrondi des boutons (<code class="inline">border-radius</code>).</div>
+        <div class="callout fini">✅ <strong>Tu as fini ?</strong> Montre ton site coloré à ton tuteur !</div>
+      </section>
+
+      <!-- ===================== PARTIE 3 ===================== -->
+      <div class="partie-header" id="p3">
+        <span class="partie-num">Partie 3</span>
+        <h2>🏗️ Ajouter du contenu</h2>
+        <p>Tu ne fais plus que modifier : tu construis de nouvelles parties du site.</p>
+      </div>
+
+      <div class="explication">
+        <span class="etiquette">📖 Explication</span>
+        <h3>Une page est faite de sections</h3>
+        <p>Une page web est découpée en <strong>sections</strong> (accueil, entreprise, plantes...). Une section ressemble à ça :</p>
+        <div class="code-bloc"><pre>&lt;section id="metiers" class="section"&gt;
+  &lt;h2&gt;🛠️ Les métiers&lt;/h2&gt;
+  &lt;p&gt;Texte ici...&lt;/p&gt;
+&lt;/section&gt;</pre></div>
+        <p>Tu peux en ajouter autant que tu veux. Une technique très courante des développeurs : <strong>copier un bloc qui existe déjà</strong> et le modifier.</p>
+      </div>
+
+      <section class="mission" id="m4">
+        <h2>🎯 Mission 4 — Nouvelle section : Les métiers</h2>        <h3>Ta mission</h3>
+        <p>Ajouter une nouvelle section sur les métiers du paysagiste.</p>
+        <h4>Étape 1 — Ajouter la section</h4>
+        <p>Dans <code class="inline">index.html</code>, cherche <code class="inline">&lt;section id="plantes"...&gt;</code>. <strong>Après</strong> cette section (avant <code class="inline">&lt;section id="astuces"&gt;</code>), ajoute :</p>
+        <div class="code-bloc"><pre>&lt;!-- Section métiers --&gt;
+&lt;section id="metiers" class="section"&gt;
+  &lt;h2&gt;🛠️ Les métiers du paysagiste&lt;/h2&gt;
+
+  &lt;div class="grille-plantes"&gt;
+
+    &lt;div class="fiche-plante"&gt;
+      &lt;img src="images/tondeuse.svg" alt="Tondeuse" /&gt;
+      &lt;h3&gt;L'entretien&lt;/h3&gt;
+      &lt;p&gt;Tonte, taille, désherbage...&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class="fiche-plante"&gt;
+      &lt;img src="images/arbre.svg" alt="Plantation" /&gt;
+      &lt;h3&gt;La plantation&lt;/h3&gt;
+      &lt;p&gt;Choisir et installer les plantes...&lt;/p&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/section&gt;</pre></div>
+        <h4>Étape 2 — Ajouter le lien dans la nav</h4>
+        <p>Après <code class="inline">&lt;li&gt;&lt;a href="#plantes"&gt;Les plantes&lt;/a&gt;&lt;/li&gt;</code>, ajoute :</p>
+        <div class="code-bloc"><pre>&lt;li&gt;&lt;a href="#metiers"&gt;Les métiers&lt;/a&gt;&lt;/li&gt;</pre></div>
+        <h4>Étape 3 — Vrai contenu</h4>
+        <p>Remplace les textes par de vraies infos sur les métiers que tu as vus pendant le stage.</p>
+        <div class="callout fini">✅ <strong>Tu as fini ?</strong> Appelle ton tuteur !</div>
+      </section>
+
+      <!-- ===================== PARTIE 4 ===================== -->
+      <div class="partie-header" id="p4">
+        <span class="partie-num">Partie 4</span>
+        <h2>⚡ JavaScript et l'intelligence artificielle</h2>
+        <p>Rendre le site vivant — et comprendre comment marche l'assistant IA.</p>
+      </div>
+
+      <div class="explication">
+        <span class="etiquette">📖 Explication</span>
+        <h3>JavaScript : le code qui réagit</h3>
+        <p>Le <strong>JavaScript</strong> (fichier <code class="inline">script.js</code>) fait bouger les choses : quand tu cliques sur un bouton, quand le chatbot répond... Sans lui, le site serait figé.</p>
+        <h3>🤖 Comment marche l'assistant IA du site ?</h3>
+        <p>L'assistant espaces verts est une IA <strong>simulée</strong> : elle ne « réfléchit » pas, elle cherche des <strong>mots-clés</strong> dans ta question et affiche une réponse préparée à l'avance.</p>
+        <p>Pour vraiment comprendre comment fonctionne une IA (le « mot suivant », les tokens, les hallucinations...), lis l'onglet <strong>Aide → L'IA</strong> avant de continuer. C'est important pour les missions qui suivent !</p>
+      </div>
+
+      <section class="mission" id="m5">
+        <h2>🎯 Mission 5 — Améliorer le chatbot (JavaScript)</h2>        <h3>Ta mission</h3>
+        <p>Enseigner un <strong>nouveau sujet</strong> à l'assistant IA ! Il connaît déjà : arbre, haie, gazon, arrosage, fleur, potager, compost, paillage, engrais.</p>
+        <h3>Comment marche le chatbot</h3>
+        <p>Dans <code class="inline">script.js</code>, l'IA utilise un tableau de règles. Quand tu poses une question, JavaScript cherche un mot-clé dans ta phrase → s'il le trouve, il affiche la réponse.</p>
+        <h4>Étape 1 — Choisir un sujet</h4>
+        <p>Un sujet jardin qu'il ne connaît pas encore : sécateur, scarification, plantation, composteur, semis...</p>
+        <h4>Étape 2 — Ajouter la règle</h4>
+        <p>Dans <code class="inline">script.js</code>, cherche <code class="inline">/* 🌿 TODO Mission 5 */</code>. Juste avant, ajoute :</p>
+        <div class="code-bloc"><pre>{
+  mots: ["sécateur", "outils", "couper"],
+  reponse: `✂️ &lt;strong&gt;Les outils du paysagiste&lt;/strong&gt;&lt;br&gt;&lt;br&gt;
+    Les outils essentiels :&lt;br&gt;
+    • Sécateur pour les petites branches&lt;br&gt;
+    • Élagueuse pour les grosses branches&lt;br&gt;
+    • Bêche pour retourner la terre&lt;br&gt;&lt;br&gt;
+    &lt;em&gt;Astuce : un outil propre et aiguisé travaille deux fois mieux !&lt;/em&gt;`
+},</pre></div>
+        <p>Adapte les mots-clés et la réponse à ton sujet !</p>
+        <h4>Étape 3 — Ajouter le bouton exemple</h4>
+        <p>Dans <code class="inline">index.html</code>, cherche <code class="inline">&lt;!-- 🌿 TODO Mission 5 --&gt;</code> et ajoute :</p>
+        <div class="code-bloc"><pre>&lt;button onclick="poserQuestion('Comment utiliser un sécateur ?')" class="bouton-exemple"&gt;✂️ Sécateur&lt;/button&gt;</pre></div>
+        <div class="callout bonus">🌟 <strong>Bonus :</strong> ajoute 3 règles au lieu d'une, et vérifie que les autres sujets marchent encore.</div>
+        <div class="callout fini">✅ <strong>Tu as fini ?</strong> Pose une question au chatbot devant ton tuteur !</div>
+      </section>
+
+      <section class="mission" id="m6">
+        <h2>🎯 Mission 6 — Ajouter une astuce jardin</h2>        <h3>Ta mission</h3>
+        <p>Le bouton « Nouvelle astuce » affiche des conseils au hasard. Tu vas en ajouter !</p>
+        <h4>Étape 1 — Trouver des astuces</h4>
+        <p>Cherche 3 vraies astuces jardinage (Internet, ton tuteur), ou invente-en.</p>
+        <h4>Étape 2 — Les ajouter</h4>
+        <p>Dans <code class="inline">script.js</code>, cherche le tableau <code class="inline">const astuces = [</code>. Avant le <code class="inline">];</code>, ajoute :</p>
+        <div class="code-bloc"><pre>"🌿 Plante des herbes aromatiques près de tes légumes — elles éloignent les insectes nuisibles !",
+"🐝 Une haie fleurie attire les abeilles qui pollinisent ton jardin.",
+"❄️ En hiver, protège les plantes fragiles avec un voile d'hivernage.",</pre></div>
+        <p><strong>Important :</strong> chaque ligne se termine par une virgule <code class="inline">,</code></p>
+        <div class="callout bonus">🌟 <strong>Bonus :</strong> demande à ChatGPT « Donne-moi 10 astuces jardinage courtes pour un débutant » et ajoute les meilleures.</div>
+        <div class="callout fini">✅ <strong>Tu as fini ?</strong> Montre à ton tuteur combien d'astuces il y a maintenant !</div>
+      </section>
+
+      <!-- ===================== PARTIE 5 ===================== -->
+      <div class="partie-header" id="p5">
+        <span class="partie-num">Partie 5</span>
+        <h2>🌍 Ta page &amp; la mise en ligne</h2>
+        <p>Raconter ton expérience, et découvrir comment un site arrive sur Internet.</p>
+      </div>
+
+      <div class="explication">
+        <span class="etiquette">📖 Explication</span>
+        <h3>Un site, c'est aussi un portfolio</h3>
+        <p>Ton site peut devenir une <strong>vitrine</strong> de ce que tu sais faire. La page « Mon stage » raconte ton expérience — c'est <strong>ta</strong> page, personne ne peut la remplir à ta place.</p>
+        <h3>Et pour le mettre en ligne ?</h3>
+        <p>Pour qu'un site soit visible sur Internet, on dépose ses fichiers sur un <strong>hébergeur</strong> (un ordinateur allumé en permanence). Ton tuteur peut te montrer comment obtenir une vraie adresse (une URL) à partager avec ta famille.</p>
+      </div>
+
+      <section class="mission" id="m7">
+        <h2>🎯 Mission 7 — Remplir « Mon stage »</h2>        <h3>Ta mission</h3>
+        <p>C'est <strong>ta</strong> page ! Dans <code class="inline">index.html</code>, cherche <code class="inline">&lt;section id="stage"&gt;</code> et remplace tous les <code class="inline">???</code>.</p>
+        <div class="callout">ℹ️ <strong>Attention, ce site va être mis en ligne</strong> — il pourra être vu par tout le monde sur Internet. Ne mets donc <strong>pas</strong> d'informations trop personnelles : pas de <strong>nom de famille</strong>, pas d'<strong>adresse</strong>, pas de <strong>numéro de téléphone</strong> ni d'<strong>email</strong>. Ton <strong>prénom</strong> (ou juste son initiale) suffit. En cas de doute, demande à ton tuteur.</div>
+        <h4>Carte 1 — Qui suis-je ?</h4>
+        <p>Ton prénom, ton école, ta classe.</p>
+        <h4>Carte 2 — Ce que j'ai appris</h4>
+        <p>3 choses apprises, par ex. : « comment fonctionne une IA », « la différence HTML / CSS », « publier un site ».</p>
+        <h4>Cartes 3 et 4 — Ce qui m'a surpris / ce que j'ai préféré</h4>
+        <p>Qu'est-ce qui t'a étonné ? Quel a été ton moment préféré ?</p>
+        <div class="callout fini">✅ Cette page peut être dans le dossier que tu remettras à ton école !</div>
+      </section>
+
+      <section class="mission" id="m8">
+        <h2>🎯 Mission 8 — Demander à ChatGPT d'améliorer le site</h2>        <h3>Ta mission</h3>
+        <p>Utiliser ChatGPT comme un <strong>outil de travail</strong> — pas pour qu'il fasse tout à ta place, mais pour avoir des idées que tu intègres toi-même. <em>(Demande à ton tuteur de t'aider à ouvrir ChatGPT.)</em></p>
+        <h4>Étape 1 — Demander des idées</h4>
+        <blockquote>« Je suis stagiaire chez LAJUS, une entreprise d'espaces verts. J'ai créé un site web avec HTML, CSS et JavaScript (page d'accueil, section plantes, chatbot espaces verts, page mon stage). Donne-moi 5 idées simples pour l'améliorer, adaptées à un débutant. »</blockquote>
+        <h4>Étape 2 — Choisir UNE idée</h4>
+        <p>Sur une feuille : quelle idée ? pourquoi celle-là ? comment la réaliser ?</p>
+        <h4>Étape 3 — Demander le code</h4>
+        <blockquote>« Montre-moi le code HTML/CSS/JavaScript pour [ton idée]. Je suis débutant, explique chaque ligne. »</blockquote>
+        <h4>Étape 4 — Comprendre et intégrer</h4>
+        <p><strong>Ne colle jamais du code sans le lire !</strong> Pour chaque ligne : lis le commentaire, essaie de comprendre, et si tu ne comprends pas demande « Que fait cette ligne ? ».</p>
+        <div class="callout">🐞 <strong>Si ça ne marche pas :</strong> <span class="kbd">F12</span> → Console → cherche les erreurs en rouge → copie l'erreur et demande à ChatGPT comment la corriger.</div>
+        <h3>Réflexion finale</h3>
+        <ul>
+          <li>Quelle différence entre <strong>copier</strong> du code et <strong>comprendre</strong> du code ?</li>
+          <li>Comment utiliser ChatGPT intelligemment (sans tricher) ?</li>
+        </ul>
+        <div class="callout fini">✅ <strong>Tu as fini ?</strong> Montre à ton tuteur ce que tu as ajouté ET explique-lui comment ça marche.</div>
+      </section>
+
+      <!-- ===================== PARTIE 6 ===================== -->
+      <div class="partie-header" id="p6">
+        <span class="partie-num">Partie 6 · Pour finir</span>
+        <h2>🤖 Le secret : tout ça, c'est l'IA qui a aidé à le créer</h2>
+        <p>La dernière explication — et la plus surprenante !</p>
+      </div>
+
+      <div class="explication">
+        <span class="etiquette">✨ La grande révélation</span>
+        <h3>Ce projet a été préparé avec une IA</h3>
+        <p>Tu as construit un site, amélioré un chatbot, ajouté des fonctionnalités. Mais sais-tu comment le site de départ, les fiches et ces missions ont été fabriqués ? <strong>Avec l'aide d'une intelligence artificielle qui sait écrire du code.</strong></p>
+
+        <h3>Pourquoi une IA sait coder ?</h3>
+        <p>Souviens-toi (onglet <strong>Aide → L'IA</strong>) : une IA est très douée avec le <strong>langage</strong>. Or l'informatique, le code, c'est <strong>une langue comme une autre</strong> :</p>
+        <ul>
+          <li>un <strong>vocabulaire</strong> (des mots-clés comme <code class="inline">if</code>, <code class="inline">function</code>) ;</li>
+          <li>une <strong>grammaire</strong> (les accolades <code class="inline">{ }</code>, les points-virgules <code class="inline">;</code>) ;</li>
+          <li>des <strong>règles</strong> précises à respecter.</li>
+        </ul>
+        <p>Comme l'IA a lu des milliards de phrases <strong>et</strong> des milliards de lignes de code, écrire un programme revient, pour elle, à écrire une phrase : elle prédit la suite la plus logique. C'est pour ça que ça marche si bien !</p>
+
+        <h3>Codex, Claude Code : des assistants pour développeurs</h3>
+        <p>Il existe des outils comme <strong>Claude Code</strong> ou <strong>Codex</strong> : des IA spécialisées dans le code. Le principe :</p>
+        <ol>
+          <li>Tu écris <strong>en français</strong> ce que tu veux : « ajoute un bouton qui change la couleur du fond ».</li>
+          <li>L'IA écrit le code directement dans les fichiers.</li>
+          <li><strong>Toi</strong>, tu lis, tu testes, et tu corriges si besoin.</li>
+        </ol>
+        <p>Le développeur reste le <strong>chef d'orchestre</strong> : c'est lui qui décide, qui vérifie et qui comprend. L'IA est un outil très puissant, mais c'est l'humain qui mène la danse.</p>
+        <div class="callout">💡 C'est exactement la leçon de la <strong>Mission 8</strong> : l'IA fait gagner du temps, mais il faut <strong>toujours comprendre</strong> ce qu'on intègre.</div>
+
+        <div class="callout fini">👉 <strong>Envie de voir ça en vrai ?</strong> Viens me voir ! Je ne peux pas l'installer sur ton ordinateur (une question de droits), mais je te ferai une <strong>démonstration en direct</strong> sur le mien : tu verras une IA écrire du code sous tes yeux. 🤖🌱</div>
+      </div>
+
+      <!-- ===================== PARTIE 7 ===================== -->
+      <div class="partie-header" id="p7">
+        <span class="partie-num">Partie 7 · La récompense</span>
+        <h2>🎓 Ton diplôme</h2>
+        <p>Tu es arrivé au bout du parcours — il est temps de repartir avec ton diplôme !</p>
+      </div>
+
+      <section class="mission" id="m9">
+        <h2>🎯 Mission finale — Personnalise et imprime ton diplôme</h2>
+        <h3>Ta mission</h3>
+        <p>Un diplôme t'attend dans le fichier <code class="inline">diplome.html</code>. Tu vas y mettre ton nom, puis l'imprimer avec ton tuteur.</p>
+
+        <h4>Étape 1 — Mets ton nom</h4>
+        <p>Dans VS Code, ouvre <code class="inline">diplome.html</code>. Cherche (<span class="kbd">Ctrl</span>+<span class="kbd">F</span>) :</p>
+        <div class="code-bloc"><pre>[ Prénom du stagiaire ]</pre></div>
+        <p>Remplace ce texte par ton prénom (et ton nom si tu veux), par exemple :</p>
+        <div class="code-bloc"><pre>Lucas Martin</pre></div>
+
+        <h4>Étape 2 — Vérifie la date</h4>
+        <p>Un peu plus bas, trouve la date et corrige-la si besoin :</p>
+        <div class="code-bloc"><pre>&lt;div class="date-valeur"&gt;Juin 2026&lt;/div&gt;</pre></div>
+
+        <h4>Étape 3 — Regarde le résultat</h4>
+        <p><span class="kbd">Ctrl</span>+<span class="kbd">S</span>, puis double-clique sur <code class="inline">diplome.html</code> pour l'ouvrir dans le navigateur. Ton nom doit apparaître en grand au milieu du diplôme !</p>
+
+        <h4>Étape 4 — Imprime-le</h4>
+        <p>Clique sur le bouton <strong>🖨️ Imprimer le diplôme</strong>. Pour un beau rendu, choisis le format <strong>A4, orientation Paysage</strong>.</p>
+
+        <div class="callout fini">✅ <strong>Tu as fini ?</strong> Appelle ton tuteur : vous imprimez ton diplôme ensemble. Bravo, tu repars avec une vraie preuve de tes nouvelles compétences ! 🎉</div>
+      </section>
+
+    </div>
+
+    <!-- ============================================================
+         ONGLET AIDE
+    ============================================================ -->
+    <div class="panel" id="tab-aide">
+
+      <div class="carte accent">
+        <h2>📚 Les fiches d'aide</h2>
+        <p>Bloqué ? Une question sur une balise, une couleur, une ligne de code ? Tout est ici.</p>
+        <div class="chips" style="margin-top:1rem; margin-bottom:0;">
+          <a href="#aide-html">📄 HTML</a>
+          <a href="#aide-css">🎨 CSS</a>
+          <a href="#aide-js">⚡ JavaScript</a>
+          <a href="#aide-ia">🤖 L'IA</a>
+        </div>
+      </div>
+
+      <section class="fiche" id="aide-html">
+        <h2>📄 HTML</h2>
+        <blockquote>HTML = les <strong>murs</strong> de la maison. Il décrit le contenu.</blockquote>
+        <h3>C'est quoi HTML ?</h3>
+        <p><strong>HyperText Markup Language</strong> — le langage qui dit au navigateur « voici un titre », « voici un paragraphe », « voici une image ».</p>
+        <h3>Structure de base</h3>
+        <div class="code-bloc"><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="fr"&gt;
+&lt;head&gt;
+  &lt;title&gt;Mon site&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  Ce que l'utilisateur voit.
+&lt;/body&gt;
+&lt;/html&gt;</pre></div>
+        <ul>
+          <li><code class="inline">&lt;head&gt;</code> = informations sur la page</li>
+          <li><code class="inline">&lt;body&gt;</code> = le contenu visible</li>
+        </ul>
+        <h3>Les balises essentielles</h3>
+        <h4>Titres &amp; texte</h4>
+        <div class="code-bloc"><pre>&lt;h1&gt;Titre principal&lt;/h1&gt;
+&lt;h2&gt;Titre secondaire&lt;/h2&gt;
+&lt;p&gt;Un paragraphe.&lt;/p&gt;
+&lt;strong&gt;Gras&lt;/strong&gt; &lt;em&gt;Italique&lt;/em&gt;</pre></div>
+        <h4>Image, lien, bouton, zone de texte</h4>
+        <div class="code-bloc"><pre>&lt;img src="images/arbre.jpg" alt="Un arbre" /&gt;
+&lt;a href="https://google.com"&gt;Clique ici&lt;/a&gt;
+&lt;button onclick="maFonction()"&gt;Clique moi&lt;/button&gt;
+&lt;input type="text" placeholder="Tape ici..." /&gt;</pre></div>
+        <h3>Les listes</h3>
+        <div class="code-bloc"><pre>&lt;ul&gt;                  &lt;!-- À puces --&gt;
+  &lt;li&gt;Pomme&lt;/li&gt;
+  &lt;li&gt;Banane&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;                  &lt;!-- Numérotée --&gt;
+  &lt;li&gt;Premièrement&lt;/li&gt;
+&lt;/ol&gt;</pre></div>
+        <h3>Règles importantes</h3>
+        <ol>
+          <li>Toute balise ouverte doit être fermée : <code class="inline">&lt;p&gt;...&lt;/p&gt;</code></li>
+          <li>Les balises s'imbriquent : <code class="inline">&lt;div&gt;&lt;p&gt;texte&lt;/p&gt;&lt;/div&gt;</code></li>
+          <li>Certaines se ferment seules : <code class="inline">&lt;img /&gt;</code>, <code class="inline">&lt;br /&gt;</code></li>
+        </ol>
+        <div class="callout">🐞 <strong>Débogage :</strong> <span class="kbd">F12</span> → onglet <strong>Elements</strong> → tu vois tout le HTML.</div>
+      </section>
+
+      <section class="fiche" id="aide-css">
+        <h2>🎨 CSS</h2>
+        <blockquote>CSS = la <strong>peinture</strong> de la maison. Il décrit l'apparence.</blockquote>
+        <h3>Comment ça s'écrit</h3>
+        <div class="code-bloc"><pre>SELECTEUR {
+  propriété: valeur;
+}
+
+h1 {
+  color: green;
+  font-size: 30px;
+}</pre></div>
+        <h3>Les sélecteurs</h3>
+        <div class="code-bloc"><pre>h1 { }           /* Tous les &lt;h1&gt; */
+.bouton { }      /* class="bouton" */
+#logo { }        /* id="logo" */</pre></div>
+        <h3>Les couleurs</h3>
+        <div class="code-bloc"><pre>color: red;                  /* Texte */
+background-color: #eee;      /* Fond */
+color: #ff0000;    /* Rouge */
+color: #00aa00;    /* Vert */</pre></div>
+        <p>→ Pour choisir : <code class="inline">htmlcolorcodes.com</code></p>
+        <h3>Le texte</h3>
+        <div class="code-bloc"><pre>font-size: 16px;         /* Taille */
+font-weight: bold;       /* Gras */
+text-align: center;      /* Centrer */
+line-height: 1.6;        /* Espacement */</pre></div>
+        <h3>Les espaces (le « box model »)</h3>
+        <div class="code-bloc"><pre>┌─────────────────────────┐
+│   MARGIN (extérieur)    │
+│  ┌───────────────────┐  │
+│  │  BORDER (bordure) │  │
+│  │  ┌─────────────┐  │  │
+│  │  │   PADDING   │  │  │
+│  │  │  ┌───────┐  │  │  │
+│  │  │  │ TEXTE │  │  │  │
+│  │  │  └───────┘  │  │  │
+│  │  └─────────────┘  │  │
+│  └───────────────────┘  │
+└─────────────────────────┘</pre></div>
+        <div class="code-bloc"><pre>padding: 20px;           /* Intérieur */
+margin: 10px;            /* Extérieur */
+border: 2px solid green; /* Bordure */
+border-radius: 12px;     /* Coins arrondis */</pre></div>
+        <h3>Les variables CSS</h3>
+        <div class="code-bloc"><pre>:root {
+  --ma-couleur: #4a8c40;
+}
+h1 { color: var(--ma-couleur); }</pre></div>
+        <p>→ Change <code class="inline">--ma-couleur</code> une fois → ça change partout !</p>
+        <div class="callout">🐞 <strong>Débogage :</strong> <span class="kbd">F12</span> → onglet <strong>Styles</strong> → modifie les valeurs en direct pour tester.</div>
+      </section>
+
+      <section class="fiche" id="aide-js">
+        <h2>⚡ JavaScript</h2>
+        <blockquote>JavaScript = l'<strong>électricité</strong> de la maison. Il gère les interactions.</blockquote>
+        <h3>Les variables — stocker des informations</h3>
+        <div class="code-bloc"><pre>let age = 14;                    // Un nombre
+let prenom = "Lucas";            // Du texte
+let fruits = ["pomme", "poire"]; // Un tableau</pre></div>
+        <p>→ <code class="inline">let</code> = peut changer · <code class="inline">const</code> = ne change pas</p>
+        <h3>Afficher des informations</h3>
+        <div class="code-bloc"><pre>console.log("Bonjour !");        // Dans la console (F12)
+alert("Bonjour !");              // Fenêtre popup</pre></div>
+        <h3>Les conditions — si... alors...</h3>
+        <div class="code-bloc"><pre>if (temperature &gt; 20) {
+  console.log("Il fait chaud !");
+} else {
+  console.log("Il fait froid !");
+}</pre></div>
+        <h3>Les boucles — répéter</h3>
+        <div class="code-bloc"><pre>for (let i = 0; i &lt; 5; i++) {
+  console.log("Tour " + i);
+}</pre></div>
+        <h3>Les fonctions — des recettes réutilisables</h3>
+        <div class="code-bloc"><pre>function direBonjour(prenom) {
+  alert("Bonjour " + prenom + " !");
+}
+direBonjour("Lucas");</pre></div>
+        <h3>Modifier le HTML depuis JavaScript</h3>
+        <div class="code-bloc"><pre>let el = document.getElementById("mon-titre");
+el.textContent = "Nouveau titre !";
+el.style.color = "red";
+el.style.display = "none";    // Cacher</pre></div>
+        <h3>Le hasard</h3>
+        <div class="code-bloc"><pre>Math.random()           // Entre 0 et 1
+Math.floor(7.3)         // = 7
+Math.floor(Math.random() * 5); // Index au hasard</pre></div>
+        <div class="callout">🐞 <strong>Débogage :</strong> <span class="kbd">F12</span> → Console → les erreurs sont en rouge. Tu peux y taper du code : <code class="inline">1 + 1</code>.</div>
+      </section>
+
+      <section class="fiche" id="aide-ia">
+        <h2>🤖 L'Intelligence Artificielle</h2>
+        <h3>C'est quoi une IA ?</h3>
+        <p>Une IA ne réfléchit <strong>pas</strong> comme un humain. Elle prédit le <strong>mot suivant</strong>.</p>
+        <h3>Un exemple simple</h3>
+        <blockquote>« Je mange une... »</blockquote>
+        <p>Tu as pensé à <strong>pomme</strong>, <strong>pizza</strong>, <strong>glace</strong>... Parce que ton cerveau a lu plein de phrases et sait quels mots viennent souvent après. Une IA fait pareil, avec des milliards de phrases lues sur Internet.</p>
+        <h3>Comment ça marche vraiment</h3>
+        <div class="code-bloc"><pre>Ta question (le "prompt")
+        ↓
+Découpage en morceaux (les "tokens")
+"Comment" | "tailler" | "une" | "haie" | "?"
+        ↓
+Calculs de probabilités
+"Quelle est la suite la plus probable ?"
+        ↓
+Mot suivant → Mot suivant → ...
+        ↓
+La réponse complète</pre></div>
+        <h3>Le prompt</h3>
+        <p>Le <strong>prompt</strong> = ce que tu écris à l'IA. La même IA répond différemment selon le prompt :</p>
+        <blockquote>« Explique un rosier. » → standard.<br>
+        « Tu es jardinier expert. Explique un rosier à un enfant de 6 ans. » → adapté !</blockquote>
+        <h3>Le token</h3>
+        <p>Un <strong>token</strong> = un petit morceau de texte (souvent un mot ou une syllabe). L'IA lit token par token.</p>
+        <ul>
+          <li>« jardinage » → 1 token</li>
+          <li>« anticonstitutionnellement » → 4 à 5 tokens</li>
+        </ul>
+        <h3>L'hallucination ⚠️</h3>
+        <p>L'IA peut <strong>inventer des informations fausses</strong> avec l'air sûre d'elle : c'est une <strong>hallucination</strong>.</p>
+        <div class="callout">🧪 <strong>Test :</strong> demande à ChatGPT « Qui a inventé la brouette volante nucléaire ? » → il va probablement inventer un nom !</div>
+        <blockquote><strong>Règle d'or :</strong> vérifie toujours les informations importantes que te donne une IA.</blockquote>
+        <h3>Une vraie IA, ça marche comment ?</h3>
+        <ol>
+          <li>Tu envoies ta question à un <strong>serveur</strong> distant</li>
+          <li>Le serveur fait tourner un <strong>modèle</strong> (des milliards de paramètres)</li>
+          <li>Le modèle génère la réponse mot par mot, qui te revient via Internet</li>
+        </ol>
+        <p>On appelle ça une <strong>API</strong>.</p>
+        <h3>Quelques dates clés</h3>
+        <table>
+          <tr><th>Année</th><th>Événement</th></tr>
+          <tr><td>2017</td><td>Google invente le Transformer (la base des IA actuelles)</td></tr>
+          <tr><td>2020</td><td>GPT-3 : première IA vraiment impressionnante</td></tr>
+          <tr><td>2022</td><td>ChatGPT : l'IA arrive pour le grand public</td></tr>
+          <tr><td>2023</td><td>Explosion des IA : Claude, Gemini, Mistral...</td></tr>
+          <tr><td>2024</td><td>Les IA entrent dans les entreprises</td></tr>
+        </table>
+      </section>
+
+    </div>
+
+    <footer>
+      🌱 Bravo — chaque mission terminée est une vraie compétence !
+    </footer>
+
+  </main>
+
+  <script>
+    // --- Onglets ---
+    var boutons = document.querySelectorAll('.tab-btn');
+    var panneaux = document.querySelectorAll('.panel');
+    function activer(nom) {
+      boutons.forEach(function (b) { b.classList.toggle('active', b.dataset.tab === nom); });
+      panneaux.forEach(function (p) { p.classList.toggle('active', p.id === 'tab-' + nom); });
+      window.scrollTo({ top: 0 });
+    }
+    boutons.forEach(function (b) {
+      b.addEventListener('click', function () { activer(b.dataset.tab); });
+    });
+
+    // Les liens du sommaire basculent vers le bon onglet avant de défiler
+    document.querySelectorAll('.chips a').forEach(function (lien) {
+      lien.addEventListener('click', function () {
+        var panneau = lien.closest('.panel');
+        // (le lien reste dans le même onglet, le défilement se fait naturellement)
+      });
+    });
+
+    // --- Boutons "Copier" ---
+    document.querySelectorAll('.code-bloc').forEach(function (bloc) {
+      var btn = document.createElement('button');
+      btn.className = 'btn-copier';
+      btn.textContent = '📋 Copier';
+      btn.addEventListener('click', function () {
+        navigator.clipboard.writeText(bloc.querySelector('pre').innerText).then(function () {
+          btn.textContent = '✅ Copié !';
+          btn.classList.add('ok');
+          setTimeout(function () { btn.textContent = '📋 Copier'; btn.classList.remove('ok'); }, 1500);
+        });
+      });
+      bloc.appendChild(btn);
+    });
+  </script>
+
+</body>
+</html>

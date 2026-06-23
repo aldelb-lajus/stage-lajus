@@ -1,0 +1,585 @@
+/* ============================================================
+   STYLE.CSS — La décoration du site
+
+   CSS = peinture de la maison
+   Ici on choisit les couleurs, les tailles, les espacements.
+
+   Comment ça marche ?
+   On écrit : QUI { QUOI: VALEUR; }
+   Exemple : h1 { color: green; }
+   → Tous les titres h1 seront verts
+
+   🌿 TODO Mission 3 : Modifie les couleurs ci-dessous !
+============================================================ */
+
+/* ============================================================
+   VARIABLES CSS — Les couleurs du site
+
+   Chaque couleur a un NOM qui dit À QUOI elle sert (et non sa
+   teinte). Tu peux donc mettre la couleur que tu veux : si tu
+   changes --couleur-principale en rouge, tout ce qui l'utilise
+   devient rouge. Une seule ligne change tout le site !
+
+   🌿 TODO Mission 3 : Change ces couleurs pour personnaliser le site !
+============================================================ */
+:root {
+  --couleur-principale:  #2d5a27;   /* Titres, barre du haut, pied de page */
+  --couleur-boutons:     #4a8c40;   /* Boutons et survol des liens */
+  --couleur-accent:      #8bc34a;   /* Bordures et petites touches de couleur */
+  --couleur-fond:        #e8f5e9;   /* Fonds des zones claires */
+  --couleur-secondaire:  #5d4037;   /* Couleur en réserve (à toi de l'utiliser !) */
+  --blanc:               #ffffff;
+  --gris-clair:          #f5f5f5;
+  --texte-fonce:         #212121;   /* Couleur du texte normal */
+  --texte-moyen:         #555555;   /* Couleur des textes plus discrets */
+
+  /* Tailles de texte */
+  --taille-normale: 1rem;       /* 16px */
+  --taille-grande:  1.5rem;     /* 24px */
+  --taille-titre:   2.5rem;     /* 40px */
+
+  /* Coins arrondis */
+  --rayon: 12px;
+
+  /* Ombres */
+  --ombre: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* ============================================================
+   RESET — Remise à zéro
+
+   Chaque navigateur a ses propres styles par défaut.
+   On les remet à zéro pour partir d'une base propre.
+============================================================ */
+* {
+  margin: 0;         /* Pas d'espace extérieur par défaut */
+  padding: 0;        /* Pas d'espace intérieur par défaut */
+  box-sizing: border-box; /* Le padding ne déborde pas */
+}
+
+/* ============================================================
+   CORPS DE PAGE
+============================================================ */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--texte-fonce);
+  background-color: var(--blanc);
+  line-height: 1.6;  /* Espace entre les lignes */
+}
+
+/* Toutes les images s'adaptent à leur conteneur */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ============================================================
+   NAVIGATION (barre du haut)
+============================================================ */
+nav {
+  background-color: var(--couleur-principale);
+  padding: 1rem 2rem;
+  display: flex;              /* Disposition en ligne */
+  justify-content: space-between; /* Logo à gauche, liens à droite */
+  align-items: center;        /* Centré verticalement */
+  position: sticky;           /* Reste en haut quand on défile */
+  top: 0;
+  z-index: 100;               /* Passe par-dessus les autres éléments */
+  box-shadow: var(--ombre);
+}
+
+/* Le logo dans la nav */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--blanc);
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.nav-logo-img {
+  width: 40px;
+  height: 40px;
+}
+
+/* La liste de liens */
+.nav-liens {
+  list-style: none;   /* Pas de puces */
+  display: flex;
+  gap: 2rem;          /* Espace entre les liens */
+}
+
+/* Chaque lien de navigation */
+.nav-liens a {
+  color: var(--blanc);
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--rayon);
+  transition: background 0.2s; /* Animation douce au survol */
+}
+
+/* Survol d'un lien */
+.nav-liens a:hover {
+  background-color: var(--couleur-boutons);
+}
+
+/* ============================================================
+   SECTION HERO (grande bannière d'accueil)
+============================================================ */
+.hero {
+  background: linear-gradient(135deg, var(--couleur-principale), var(--couleur-boutons));
+  color: var(--blanc);
+  padding: 5rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  min-height: 60vh;   /* Au moins 60% de la hauteur de l'écran */
+}
+
+.hero-contenu {
+  flex: 1;
+  max-width: 600px;
+}
+
+/* Titre principal */
+.hero h1 {
+  font-size: var(--taille-titre);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.hero-sous-titre {
+  font-size: var(--taille-grande);
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+.hero-image {
+  flex: 0 0 300px;
+}
+
+.hero-image img {
+  width: 300px;
+  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+}
+
+/* ============================================================
+   SECTIONS GÉNÉRALES
+============================================================ */
+.section {
+  padding: 4rem 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Section sur fond sombre */
+.section-sombre {
+  background-color: var(--couleur-fond);
+  max-width: 100%;
+  padding: 4rem 3rem;
+}
+
+/* On centre le contenu dans les sections sombres */
+.section-sombre > * {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Titres de section */
+.section h2 {
+  font-size: 2rem;
+  color: var(--couleur-principale);
+  margin-bottom: 1.5rem;
+  border-left: 5px solid var(--couleur-accent);
+  padding-left: 1rem;
+}
+
+.section-intro {
+  color: var(--texte-moyen);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+/* ============================================================
+   BOUTONS
+============================================================ */
+
+/* Bouton principal (vert) */
+.bouton-principal {
+  background-color: var(--couleur-accent);
+  color: var(--couleur-principale);
+  border: none;
+  padding: 0.8rem 1.8rem;
+  border-radius: var(--rayon);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;       /* Curseur main au survol */
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.2s, background 0.2s;
+}
+
+/* Effet au survol */
+.bouton-principal:hover {
+  background-color: var(--couleur-boutons);
+  color: var(--blanc);
+  transform: translateY(-2px); /* Monte légèrement */
+}
+
+/* ============================================================
+   SECTION ENTREPRISE
+============================================================ */
+.carte-entreprise {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  background: var(--blanc);
+  border-radius: var(--rayon);
+  padding: 2rem;
+  box-shadow: var(--ombre);
+}
+
+.entreprise-texte {
+  flex: 1;
+}
+
+.entreprise-texte h3 {
+  color: var(--couleur-principale);
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  font-size: 1.2rem;
+}
+
+.entreprise-texte h3:first-child {
+  margin-top: 0;
+}
+
+.liste-services {
+  list-style: none;
+  padding: 0;
+}
+
+.liste-services li {
+  padding: 0.3rem 0;
+  font-size: 1rem;
+}
+
+.entreprise-image {
+  flex: 0 0 200px;
+}
+
+.entreprise-image img {
+  width: 200px;
+}
+
+/* ============================================================
+   GRILLE DE PLANTES
+============================================================ */
+.grille-plantes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Chaque carte plante */
+.fiche-plante {
+  background: var(--blanc);
+  border-radius: var(--rayon);
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: var(--ombre);
+  transition: transform 0.2s;
+  border: 2px solid transparent;
+}
+
+/* Animation au survol */
+.fiche-plante:hover {
+  transform: translateY(-5px);
+  border-color: var(--couleur-accent);
+}
+
+.fiche-plante img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+
+.fiche-plante h3 {
+  color: var(--couleur-principale);
+  margin-bottom: 0.3rem;
+}
+
+.fiche-plante p {
+  color: var(--texte-moyen);
+  font-size: 0.85rem;
+}
+
+/* Zone d'info qui apparaît quand on clique */
+.info-plante {
+  background: var(--blanc);
+  border-radius: var(--rayon);
+  padding: 2rem;
+  box-shadow: var(--ombre);
+  border-left: 5px solid var(--couleur-accent);
+  position: relative;
+  margin-top: 1rem;
+}
+
+.info-plante h3 {
+  color: var(--couleur-principale);
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.fermer {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--gris-clair);
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--rayon);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.fermer:hover {
+  background: #ddd;
+}
+
+/* ============================================================
+   SECTION ASTUCES
+============================================================ */
+.astuce-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.astuce-carte {
+  background: var(--couleur-fond);
+  border-left: 5px solid var(--couleur-accent);
+  border-radius: var(--rayon);
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: var(--couleur-principale);
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
+   CHATBOT IA
+============================================================ */
+.chat-conteneur {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Zone de messages */
+.chat-messages {
+  background: var(--blanc);
+  border-radius: var(--rayon);
+  padding: 1.5rem;
+  height: 350px;
+  overflow-y: auto;   /* Défilement vertical */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: var(--ombre);
+  margin-bottom: 1rem;
+}
+
+/* Un message de l'utilisateur */
+.message-utilisateur {
+  align-self: flex-end;   /* À droite */
+  background: var(--couleur-boutons);
+  color: var(--blanc);
+  padding: 0.8rem 1.2rem;
+  border-radius: 18px 18px 4px 18px;
+  max-width: 80%;
+}
+
+/* Un message de l'IA */
+.message-ia {
+  align-self: flex-start;   /* À gauche */
+  background: var(--gris-clair);
+  color: var(--texte-fonce);
+  padding: 0.8rem 1.2rem;
+  border-radius: 18px 18px 18px 4px;
+  max-width: 80%;
+}
+
+/* Nom au-dessus du message */
+.message-nom {
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+  opacity: 0.7;
+}
+
+/* Zone de saisie */
+.chat-saisie {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.chat-saisie input {
+  flex: 1;
+  padding: 0.8rem 1.2rem;
+  border: 2px solid var(--couleur-accent);
+  border-radius: var(--rayon);
+  font-size: 1rem;
+  outline: none;
+}
+
+.chat-saisie input:focus {
+  border-color: var(--couleur-principale);
+}
+
+/* Bouton d'envoi */
+.bouton-envoyer {
+  background: var(--couleur-principale);
+  color: var(--blanc);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--rayon);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.bouton-envoyer:hover {
+  background: var(--couleur-boutons);
+}
+
+/* Questions exemples */
+.questions-exemples {
+  text-align: center;
+}
+
+.questions-exemples p {
+  color: var(--texte-moyen);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.bouton-exemple {
+  background: var(--blanc);
+  border: 2px solid var(--couleur-accent);
+  color: var(--couleur-principale);
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  margin: 0.3rem;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.bouton-exemple:hover {
+  background: var(--couleur-accent);
+  color: var(--blanc);
+}
+
+/* ============================================================
+   SECTION MON STAGE
+============================================================ */
+.stage-grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.stage-carte {
+  background: var(--blanc);
+  border-radius: var(--rayon);
+  padding: 1.5rem;
+  box-shadow: var(--ombre);
+  border-top: 4px solid var(--couleur-accent);
+}
+
+.stage-carte h3 {
+  color: var(--couleur-principale);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.stage-carte ul {
+  padding-left: 1.2rem;
+}
+
+.stage-carte li {
+  margin-bottom: 0.5rem;
+}
+
+/* ============================================================
+   PIED DE PAGE
+============================================================ */
+footer {
+  background: var(--couleur-principale);
+  color: var(--blanc);
+  text-align: center;
+  padding: 2rem;
+}
+
+.footer-petit {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin-top: 0.5rem;
+}
+
+/* ============================================================
+   RESPONSIVE — Adaptation aux petits écrans
+
+   Sur téléphone, on empile les éléments verticalement
+============================================================ */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-image {
+    flex: none;
+  }
+
+  .hero-image img {
+    width: 200px;
+  }
+
+  nav {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .nav-liens {
+    gap: 1rem;
+  }
+
+  .carte-entreprise {
+    flex-direction: column;
+  }
+
+  .section {
+    padding: 2rem 1.5rem;
+  }
+}

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220">
+  <!-- Sol -->
+  <ellipse cx="100" cy="205" rx="55" ry="10" fill="#8d6e63" opacity="0.4"/>
+  <!-- Tronc -->
+  <rect x="88" y="150" width="24" height="60" rx="5" fill="#6d4c41"/>
+  <!-- Racines -->
+  <path d="M88 200 Q70 210 60 205" stroke="#6d4c41" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M112 200 Q130 210 140 205" stroke="#6d4c41" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- Feuillage (3 cercles superposés) -->
+  <circle cx="100" cy="120" r="55" fill="#4a8c40"/>
+  <circle cx="70" cy="100" r="40" fill="#5a9e50"/>
+  <circle cx="130" cy="100" r="40" fill="#5a9e50"/>
+  <circle cx="100" cy="75" r="45" fill="#6ab060"/>
+  <!-- Reflets -->
+  <circle cx="85" cy="65" r="15" fill="#8bc34a" opacity="0.4"/>
+</svg>
